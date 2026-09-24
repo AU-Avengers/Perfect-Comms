@@ -54,11 +54,12 @@ public static class VoiceChatPatches
             // them before any normal polling resumes once Unity input becomes readable again.
             if (_transmitInputQuarantinePending)
                 ReleaseHeldTransmitInputs();
-            if (ShouldHardSuppressVoiceInput(
+            bool minigameOpen = Minigame.Instance != null;
+            if (ShouldHardSuppressTransmitInput(
                     Application.isFocused,
                     VoiceUiKit.RebindRow.ShouldSuppressKeybinds,
                     VoiceUiKit.AnyPanelOpen,
-                    Minigame.Instance != null,
+                    minigameOpen,
                     IsFriendsListOpen()))
             {
                 ReleaseHeldTransmitInputs();
@@ -69,6 +70,15 @@ public static class VoiceChatPatches
             bool chatOpen = IsChatOpen();
             bool allowAllWhileChatOpen =
                 VoiceSettings.Instance?.AllowKeybindsWhileChatOpen.Value == true;
+
+            if (minigameOpen)
+            {
+                SuppressBlockedBindings();
+                UpdateTeamRadioHold(chatOpen, allowAllWhileChatOpen);
+                UpdatePushToMuteHold(chatOpen, allowAllWhileChatOpen);
+                UpdatePushToTalkHold(chatOpen, allowAllWhileChatOpen);
+                return;
+            }
 
             FireIfAllowedForChat(
                 VoiceChatKeybinds.ToggleMute, chatOpen, allowAllWhileChatOpen);
@@ -256,6 +266,14 @@ public static class VoiceChatPatches
         => !applicationFocused || rebindCapturing || modalOpen ||
            minigameOpen || friendsListOpen;
 
+    internal static bool ShouldHardSuppressTransmitInput(
+        bool applicationFocused,
+        bool rebindCapturing,
+        bool modalOpen,
+        bool minigameOpen,
+        bool friendsListOpen)
+        => !applicationFocused || rebindCapturing || modalOpen || friendsListOpen;
+
     internal static bool ShouldBlockBindingForChat(
         bool chatOpen,
         bool allowAllWhileChatOpen,
@@ -266,7 +284,7 @@ public static class VoiceChatPatches
     {
         bool allowAllWhileChatOpen =
             VoiceSettings.Instance?.AllowKeybindsWhileChatOpen.Value == true;
-        return ShouldHardSuppressVoiceInput(
+        return ShouldHardSuppressTransmitInput(
                    Application.isFocused,
                    VoiceUiKit.RebindRow.ShouldSuppressKeybinds,
                    VoiceUiKit.AnyPanelOpen,
@@ -275,6 +293,21 @@ public static class VoiceChatPatches
                ShouldBlockBindingForChat(
                    IsChatOpen(), allowAllWhileChatOpen,
                    bindingAllowedWhileChatOpen: false);
+    }
+
+    private static void SuppressBlockedBindings()
+    {
+        foreach (var binding in VoiceChatKeybinds.AllBindings)
+        {
+            if (binding == VoiceChatKeybinds.PushToTalk ||
+                binding == VoiceChatKeybinds.PushToMute ||
+                binding == VoiceChatKeybinds.TeamRadio)
+                continue;
+
+            binding.SuppressUntilReleased();
+        }
+
+        SetAliveDeadMixFocus(VoiceAliveDeadMixFocus.Neutral, showToast: false);
     }
 
 
