@@ -262,7 +262,7 @@ internal static class VoiceProximityCalculator
 
         if (s.ImpostorChat)
         {
-            if (!localImp || !targetImp)
+            if (!localImp || !targetImp || (targetDead && !s.ImpostorHearGhosts))
                 return VoiceProximityResult.Muted(VoiceProximityReason.ImpostorChat, previousWallCoefficient);
 
             return new(1f, 0f, 0f, 0f, VoiceAudioFilterMode.None,
