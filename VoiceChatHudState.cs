@@ -307,7 +307,7 @@ public static partial class VoiceChatHudState
         _controlsLayout = settings.VoiceControlsLayout.Value;
         _voiceControlsHudEnabled = VoiceHudFeatureVisibility.Resolve(
             settings.DisableVoiceControlsHud.Value,
-            settings.DisableSpeakingBar.Value).VoiceControlsHudVisible;
+            VoiceRoomSettingsState.Current.DisableSpeakingBar).VoiceControlsHudVisible;
         if (!_voiceControlsHudEnabled)
         {
             HideVoiceControlsHud();
@@ -626,7 +626,7 @@ public static partial class VoiceChatHudState
             if (settings != null &&
                 !VoiceHudFeatureVisibility.Resolve(
                     settings.DisableVoiceControlsHud.Value,
-                    settings.DisableSpeakingBar.Value).VoiceControlsHudVisible)
+                    VoiceRoomSettingsState.Current.DisableSpeakingBar).VoiceControlsHudVisible)
                 return;
             // 1) Decode every embedded-PNG sprite now (the dominant first-init cost). HudManager-independent and
             //    cached in _spriteCache, so the later CreateIconChild/LoadSprite calls are free.

@@ -14,6 +14,7 @@ Open **Host Voice Settings** from the lobby game-settings console. On desktop, t
 | **Walls Block Audio** | On | Lets map walls obstruct voice using the selected occlusion mode. |
 | **Hear People in Vision Only** | On | Restricts ordinary task voice to players inside the listener's current vision range. |
 | **Hear Through Cameras** | On | Lets security-camera users hear around the active camera position. |
+| **Disable Speaking Bar** | Off | Hides the speaking bar for every player in the lobby. |
 
 ## Lobby tab
 
@@ -32,11 +33,13 @@ The directory handles public-lobby discovery only. It does not carry voice audio
 | **Hear Impostors in Vents** | Off | Allows nearby players to hear an impostor inside a vent. |
 | **Private Talk in Vents** | On | Prevents players outside vents from hearing vented speech. |
 | **Impostors Hear Dead** | Off | Allows living impostors to hear dead players when the ghost rules permit speech. |
+| **Impostor Chat** | Off | Mutes crewmates during tasks and lets impostors hear one another from anywhere. Meetings remain normal. |
 | **Comms Sabotage Disables Voice** | On | Disables ordinary voice while Communications sabotage is active. |
 | **Only Ghosts can Talk/Hear** | Off | Restricts task-phase voice to dead players. |
 | **Ghosts Hear Each Other Anywhere** | Off | Removes proximity distance between dead players. |
 | **Meetings/Lobby Only** | Off | Disables living-player voice during tasks. |
 | **Ghosts Also Meeting/Lobby Only** | Off | Applies Meetings/Lobby Only to dead players too. |
+| **Meeting Speaking Overlay** | On | Shows the colored speaking glow on meeting cards for every player in the lobby. |
 
 Conditional rows appear only when their parent rule is enabled.
 

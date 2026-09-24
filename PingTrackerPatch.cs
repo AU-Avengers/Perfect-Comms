@@ -607,11 +607,7 @@ public static class PingTrackerPatch
     private static void RenderOverlay(PingTracker? __instance)
     {
         long overlayTicks = VoiceFrameProfiler.Begin();
-        var settings = VoiceSettings.Instance;
-        if (settings != null &&
-            !VoiceHudFeatureVisibility.Resolve(
-                settings.DisableVoiceControlsHud.Value,
-                settings.DisableSpeakingBar.Value).SpeakingBarVisible)
+        if (VoiceRoomSettingsState.Current.DisableSpeakingBar)
         {
             _activeSpeakerIds.Clear();
             _activeSpeakerLevels.Clear();

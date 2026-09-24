@@ -30,6 +30,8 @@ public class VoiceChatGameOptions
     public ToggleHolder OnlyMeetingOrLobbyAffectsGhosts { get; }
     public ToggleHolder GracePeriodEnabled { get; }
     public NumberHolder GracePeriodSeconds { get; }
+    public ToggleHolder DisableSpeakingBar { get; }
+    public ToggleHolder MeetingSpeakingOverlay { get; }
 
     private VoiceChatGameOptions(ConfigFile cfg)
     {
@@ -96,6 +98,10 @@ public class VoiceChatGameOptions
         {
             Visible = GracePeriodSubOptionVisible
         };
+        DisableSpeakingBar = new ToggleHolder(cfg, Section, "DisableSpeakingBar", "Disable Speaking Bar", false,
+            "Hides the speaking bar.");
+        MeetingSpeakingOverlay = new ToggleHolder(cfg, Section, "MeetingSpeakingOverlay", "Meeting Speaking Overlay", true,
+            "Shows the speaking glow on meeting.");
     }
 
     private static VoiceChatGameOptions? _instance;

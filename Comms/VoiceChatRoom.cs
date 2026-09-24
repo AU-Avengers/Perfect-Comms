@@ -2344,7 +2344,7 @@ public class VoiceChatRoom
             $"publicLobby={o.PublicVoiceLobby.Value} maxDistance={o.MaxChatDistance.Value:0.000} falloff={(VoiceFalloffMode)o.FalloffMode.Value} occlusion={(VoiceOcclusionMode)o.OcclusionMode.Value} " +
             $"wallsBlock={o.WallsBlockSound.Value} onlySight={o.OnlyHearInSight.Value} cameraCanHear={o.CameraCanHear.Value} " +
             $"hearInVent={o.HearInVent.Value} ventPrivate={o.VentPrivateChat.Value} commsDisable={o.CommsSabDisables.Value} " +
-            $"impHearGhosts={o.ImpostorHearGhosts.Value} impostorChat={o.ImpostorChat.Value} teamRadio={o.TeamRadio.Value} teamRadioImps={o.TeamRadioImpostors.Value} onlyGhosts={o.OnlyGhostsCanTalk.Value} onlyMeetingLobby={o.OnlyMeetingOrLobby.Value}";
+            $"impHearGhosts={o.ImpostorHearGhosts.Value} impostorChat={o.ImpostorChat.Value} teamRadio={o.TeamRadio.Value} teamRadioImps={o.TeamRadioImpostors.Value} onlyGhosts={o.OnlyGhostsCanTalk.Value} onlyMeetingLobby={o.OnlyMeetingOrLobby.Value} disableSpeakingBar={o.DisableSpeakingBar.Value} meetingOverlay={o.MeetingSpeakingOverlay.Value}";
     }
 
     private static string DescribePlayer(VoicePlayerSnapshot? player)

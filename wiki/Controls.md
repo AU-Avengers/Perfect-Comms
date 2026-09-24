@@ -67,7 +67,7 @@ Perfect Comms v4.1.7 performs a one-time migration that changes Mute and Deafen 
 
 New bindings to `Right Alt`, `Right Ctrl`, or mouse buttons MB4 through MB7 start allowed in chat; other primary keys start blocked. Rebinding a primary key recalculates that recommended choice, and you can override it afterward. A permitted printable key can both trigger its voice action and type into the message.
 
-Perfect Comms panels, active key rebinding, open task/minigame screens, the Friends List, the Voice Lobby editor, and application focus loss always block desktop keybinds. A blocked hold or chord must be physically released before it can activate again.
+Open task and minigame screens keep Push To Talk, Push To Mute, and a held Team Radio available while blocking other desktop shortcuts. Perfect Comms panels, active key rebinding, the Friends List, the Voice Lobby editor, and application focus loss block every desktop keybind. A blocked hold or chord must be physically released before it can activate again.
 
 Desktop Push To Talk keeps the selected capture stream ready while a voice session is connected, but discards samples before encoding or transmission until the binding is held. This removes hardware-start delay; the operating system can show the microphone as in use between presses.
 
@@ -96,7 +96,6 @@ All four expanded sliders range from 0% to 200%; 0% is shown as **None**.
 
 | Setting | Default | What it controls |
 | :--- | :---: | :--- |
-| **Disable Speaking Bar** | Off | Hides the speaking bar and its dependent layout, appearance, and preview settings. |
 | **Show All Players** | Off | Keeps a stable slot for every connected player instead of showing only current speakers. |
 | **Live Preview** | Off | Moves the settings panel aside and shows an isolated 15-player preview while you edit. It turns itself off when you close settings, leave the HUD tab, or restart the game. |
 | **Speaking Bar Position** | Top Middle | Chooses a top, middle-side, or bottom screen preset. |
@@ -110,13 +109,13 @@ Manual layout adds **Speaking Bar Layout** (Horizontal by default), **Avatar Fac
 
 Side Layout starts as Single Lane. The fresh guided setup selects Wrapped; at the default Top Middle preset, both produce the same automatically wrapped center layout.
 
-### Meeting overlay
+### Host-controlled voice indicators
 
-- **Meeting Speaking Overlay** normally adds a colored glow to the real speaker's public meeting card. Task-world disguises, concealment, and blindness do not change it once the meeting publicly reveals identities; compatible mod privacy rules can still hide or reattribute the indicator. It is on by default.
+The host controls speaking-bar visibility from **Host Voice Settings > Proximity** and the meeting speaking overlay from **Host Voice Settings > Meeting & Voice**. When enabled, the meeting overlay adds a colored glow to the real speaker's public meeting card. Task-world disguises, concealment, and blindness do not change it once the meeting publicly reveals identities; compatible mod privacy rules can still hide or reattribute the indicator.
 
 ## Advanced tab
 
-- **First-Time Setup > Run Setup Again** reopens the guided Welcome, Audio, Controls, HUD, and Review flow. Existing settings are kept unless you finish with changes. On desktop, the Controls step can globally allow every keybind while chat is open; choose individual chat keybinds later from the full Keybinds tab. The HUD step exposes Hide controls, Hide connection status, Hide speaking bar, and Hide meeting overlay; hiding the speaking bar hides its preset picker and live preview.
+- **First-Time Setup > Run Setup Again** reopens the guided Welcome, Audio, Controls, HUD, and Review flow. Existing settings are kept unless you finish with changes. On desktop, the Controls step can globally allow every keybind while chat is open; choose individual chat keybinds later from the full Keybinds tab. The HUD step exposes local voice-control and connection-status visibility plus speaking-bar layout choices when the host enables the bar.
 - **Show Fake 15 Players** fills the speaking bar with a test roster for layout troubleshooting. It resets off on every game launch.
 - **Diagnostics** writes detailed voice and microphone-calibration logs. It resets off on launch; leave it off unless you are investigating a problem.
 

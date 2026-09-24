@@ -100,7 +100,7 @@ public static class MeetingSpeakingIndicatorPatch
         var settings = VoiceSettings.Instance;
         bool debugHud = settings?.DebugVoiceStats.Value == true;
         bool logNow = debugHud && ShouldLog(ref _lastUpdateLogUtc);
-        if (settings != null && !settings.MeetingSpeakingOverlay.Value)
+        if (!VoiceRoomSettingsState.Current.MeetingSpeakingOverlay)
         {
             DisableAll();
             if (logNow)

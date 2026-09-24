@@ -15,8 +15,8 @@ internal static class VoiceProtocol
     // Protocol 5 is the Pion WebRTC RTP + Among Us RPC signaling transport. Protocol 4 used the
     // retired webrtc-rs engine. Mixed-engine sessions are intentionally rejected until a release
     // gate proves cross-version interoperability; protocol 3 used the older Socket.IO transport.
-    public const int ProtocolVersion = 6;
-    public const int MinCompatibleVersion = 6;
+    public const int ProtocolVersion = 7;
+    public const int MinCompatibleVersion = 7;
 
     public const int MaxEncodedAudioBytes = 4096;
     public const int AudioSequenceBytes = 4;

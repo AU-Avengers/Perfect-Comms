@@ -254,7 +254,7 @@ public static class HostSettingsPanel
             0 => new List<OptionHolder>
             {
                 g.MaxChatDistance, g.FalloffMode, g.OcclusionMode, g.WallsBlockSound,
-                g.OnlyHearInSight, g.CameraCanHear
+                g.OnlyHearInSight, g.CameraCanHear, g.DisableSpeakingBar
             },
             1 => new List<OptionHolder>
             {
@@ -265,7 +265,7 @@ public static class HostSettingsPanel
                 g.GracePeriodEnabled, g.GracePeriodSeconds,
                 g.HearInVent, g.VentPrivateChat, g.ImpostorHearGhosts, g.ImpostorChat, g.CommsSabDisables,
                 g.OnlyGhostsCanTalk, g.GhostsHearEachOtherUnlimited, g.OnlyMeetingOrLobby,
-                g.OnlyMeetingOrLobbyAffectsGhosts
+                g.OnlyMeetingOrLobbyAffectsGhosts, g.MeetingSpeakingOverlay
             },
             3 => new List<OptionHolder>
             {

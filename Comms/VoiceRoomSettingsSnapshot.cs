@@ -24,6 +24,8 @@ public readonly record struct VoiceRoomSettingsSnapshot(
     bool TeamRadioInMeetings,
     bool TeamRadioInTasks,
     bool GhostsHearEachOtherUnlimited,
+    bool DisableSpeakingBar,
+    bool MeetingSpeakingOverlay,
     bool GracePeriodEnabled,
     float GracePeriodSeconds)
 {
@@ -56,6 +58,8 @@ public readonly record struct VoiceRoomSettingsSnapshot(
         TeamRadioInMeetings: false,
         TeamRadioInTasks: true,
         GhostsHearEachOtherUnlimited: false,
+        DisableSpeakingBar: false,
+        MeetingSpeakingOverlay: true,
         GracePeriodEnabled: false,
         GracePeriodSeconds: 5f);
 
@@ -84,6 +88,8 @@ public readonly record struct VoiceRoomSettingsSnapshot(
             TeamRadioInMeetings: options.TeamRadioInMeetings.Value,
             TeamRadioInTasks: options.TeamRadioInTasks.Value,
             GhostsHearEachOtherUnlimited: options.GhostsHearEachOtherUnlimited.Value,
+            DisableSpeakingBar: options.DisableSpeakingBar.Value,
+            MeetingSpeakingOverlay: options.MeetingSpeakingOverlay.Value,
             GracePeriodEnabled: options.GracePeriodEnabled.Value,
             GracePeriodSeconds: options.GracePeriodSeconds.Value).Clamp();
     }

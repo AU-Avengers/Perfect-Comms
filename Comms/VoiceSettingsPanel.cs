@@ -119,7 +119,7 @@ public static class VoiceSettingsPanel
 
         bool speakingBarEnabled = VoiceHudFeatureVisibility.Resolve(
             VoiceSettings.Instance.DisableVoiceControlsHud.Value,
-            VoiceSettings.Instance.DisableSpeakingBar.Value).SpeakingBarVisible;
+            VoiceRoomSettingsState.Current.DisableSpeakingBar).SpeakingBarVisible;
         bool previewEnabled = speakingBarEnabled &&
                               VoiceSettings.Instance.SpeakingBarLivePreview.Value;
         _lastLivePreviewEnabled = previewEnabled;
@@ -774,7 +774,7 @@ public static class VoiceSettingsPanel
             "Chat Keybinds",
             _chatKeybindEditorExpanded ? "Done" : "Choose Chat Keybinds",
             ToggleChatKeybindEditor,
-            "Choose the individual bindings that may work while the Among Us chat is open. Tasks/minigames, the Friends List, and modals still block them.",
+            "Choose the individual bindings that may work while the Among Us chat is open. Tasks/minigames still block non-transmit shortcuts; the Friends List and modals block every shortcut.",
             () => !s.AllowKeybindsWhileChatOpen.Value);
         Rebind(defs, VoiceChatKeybinds.OpenVoiceMenu);
         Rebind(defs, VoiceChatKeybinds.OpenHostVoiceSettings);
@@ -813,7 +813,7 @@ public static class VoiceSettingsPanel
     {
         Func<VoiceHudFeatureVisibility> visibility = () => VoiceHudFeatureVisibility.Resolve(
             s.DisableVoiceControlsHud.Value,
-            s.DisableSpeakingBar.Value);
+            VoiceRoomSettingsState.Current.DisableSpeakingBar);
         Func<bool> showVoiceControls = () => visibility().VoiceControlsHudVisible;
         Func<bool> showSpeakingBar = () => visibility().SpeakingBarVisible;
 
@@ -839,16 +839,6 @@ public static class VoiceSettingsPanel
             showVoiceControls);
 
         Section(defs, "SPEAKING BAR");
-        Toggle(
-            defs,
-            "Disable Speaking Bar",
-            () => s.DisableSpeakingBar.Value,
-            value =>
-            {
-                s.DisableSpeakingBar.Value = value;
-                _rebuildRequested = true;
-            },
-            SettingHelp(s.DisableSpeakingBar));
         Toggle(defs, "Show All Players", s.SpeakingBarFixedAllPlayers, showSpeakingBar);
         Toggle(defs, "Live Preview", s.SpeakingBarLivePreview, showSpeakingBar);
         EnumStep(defs, "Speaking Bar Position", s.SpeakingBarPosition, new[]
@@ -873,9 +863,6 @@ public static class VoiceSettingsPanel
         Slider(defs, "Speaking Bar Y", s.SpeakingBarY, Pct,
             () => showSpeakingBar() && s.SpeakingBarManualLayout.Value);
 
-        Section(defs, "MEETING OVERLAY");
-        Toggle(defs, "Meeting Speaking Overlay", s.MeetingSpeakingOverlay);
-
         Section(defs, "OTHER");
     }
 
@@ -887,7 +874,7 @@ public static class VoiceSettingsPanel
 
         Section(defs, "TROUBLESHOOTING");
         Toggle(defs, "Show Fake 15 Players", s.ShowFake15Players,
-            () => !s.DisableSpeakingBar.Value);
+            () => !VoiceRoomSettingsState.Current.DisableSpeakingBar);
         Toggle(defs, "Diagnostics",
             () => s.DebugVoiceStats.Value || s.MicCalibrationDiagnostics.Value,
             v => s.ApplyDiagnosticsToggle(v),
@@ -1006,7 +993,7 @@ public static class VoiceSettingsPanel
 
         bool speakingBarEnabled = VoiceHudFeatureVisibility.Resolve(
             settings.DisableVoiceControlsHud.Value,
-            settings.DisableSpeakingBar.Value).SpeakingBarVisible;
+            VoiceRoomSettingsState.Current.DisableSpeakingBar).SpeakingBarVisible;
         bool enabled = speakingBarEnabled && settings.SpeakingBarLivePreview.Value;
         if (enabled != _lastLivePreviewEnabled && _livePreviewUnavailable)
             _livePreviewUnavailable = false;

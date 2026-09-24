@@ -33,7 +33,7 @@ The setup saves everything only after you finish the final Review step. Existing
 | **Welcome** | Begin a new setup or keep the settings you already have. |
 | **Audio** | Select and test your microphone and output, set levels, and choose Open Mic or Push To Talk. |
 | **Controls** | Review voice controls and, on desktop, choose whether keybinds stay active while chat is open. |
-| **HUD** | Show or hide voice controls, connection status, the speaking bar, and the meeting overlay; choose a speaking-bar layout with a live preview. |
+| **HUD** | Show or hide local voice controls and connection status; choose a speaking-bar layout with a live preview when the host enables the bar. |
 | **Review** | Check the complete setup and save it together. |
 
 Run the setup again at any time from **Voice Settings > Advanced > First-Time Setup**.
@@ -47,7 +47,7 @@ These settings are local. They never change the host's lobby rules.
 | **Audio** | Microphone and speaker volume, mic sensitivity, meeting spatial audio, Open Mic or Push To Talk, optional noise gate, voice falloff softness, startup mute/deafen, noise suppression, and echo cancellation. |
 | **Devices** | Microphone selection, Windows speaker selection, live microphone monitoring, and optional delayed playback for testing how you sound. |
 | **Keybinds** (desktop) | Every keyboard or mouse binding, standalone left/right modifiers, exact modifier chords, per-binding chat behavior, temporary alive/dead volume profiles, and voice refresh. |
-| **HUD** | Voice-control layout, mute/deafen reminder, connection status, speaking-bar presets or manual placement, live preview, and meeting speaking overlay. |
+| **HUD** | Voice-control layout, mute/deafen reminder, connection status, speaking-bar presets or manual placement, and live preview. |
 | **Advanced** | Run setup again, show a fake 15-player roster for layout testing, and enable temporary diagnostics. |
 
 Android shows Audio, Devices, HUD, and Advanced tabs. Android playback follows the current system audio route, so it does not show the Windows Speaker selector or desktop Keybinds tab.
@@ -76,7 +76,7 @@ Every binding can be changed or cleared in **Voice Settings > Keybinds**.
 
 Tap and release `Right Alt` or `Right Ctrl` by itself. These standalone modifier bindings do not fire when used as part of another shortcut.
 
-With the default per-binding choices, Mute and Deafen remain available while chat is open and every other Perfect Comms shortcut is blocked. Enable **Allow Keybinds While Chat Is Open** to allow them all, or leave it off and use **Chat Keybinds > Choose Chat Keybinds** to select individual shortcuts. Perfect Comms panels, active rebinding, open task/minigame screens, the Friends List, the Voice Lobby editor, and application focus loss always block desktop keybinds. Release a blocked hold or chord before it can activate again.
+With the default per-binding choices, Mute and Deafen remain available while chat is open and every other Perfect Comms shortcut is blocked. Enable **Allow Keybinds While Chat Is Open** to allow them all, or leave it off and use **Chat Keybinds > Choose Chat Keybinds** to select individual shortcuts. Open task and minigame screens keep Push To Talk, Push To Mute, and a held Team Radio available while blocking other shortcuts. Perfect Comms panels, active rebinding, the Friends List, the Voice Lobby editor, and application focus loss block every desktop keybind. Release a blocked hold or chord before it can activate again.
 
 Push To Talk keeps the selected microphone ready while connected but discards audio before encoding and transmission until the binding is held. The operating system may therefore show the microphone as active between presses.
 
@@ -108,7 +108,7 @@ Team Radio provides private hold-to-talk channels when the host enables it and y
 
 ### Speaking indicators and privacy
 
-The speaking bar can show only active speakers or reserve a slot for every connected player. The meeting overlay highlights the public meeting card of a speaker. Disguises, concealment, blindness, and compatible mod privacy rules can hide or reattribute speaking indicators so they do not reveal protected identities.
+The host controls whether the speaking bar is available and whether the meeting overlay highlights the public meeting card of a speaker. When the bar is enabled, each player can show only active speakers or reserve a slot for every connected player and can customize its layout locally. Disguises, concealment, blindness, and compatible mod privacy rules can hide or reattribute speaking indicators so they do not reveal protected identities.
 
 ### Voice Lobbies
 
@@ -120,9 +120,9 @@ Only the current lobby host can edit these synced settings.
 
 | Built-in tab | Includes |
 | :--- | :--- |
-| **Proximity** | Maximum hearing distance, falloff, wall/vision occlusion, and security-camera hearing. |
+| **Proximity** | Maximum hearing distance, falloff, wall/vision occlusion, security-camera hearing, and speaking-bar visibility. |
 | **Lobby** | Public voice-lobby listing and directory selection. |
-| **Meeting & Voice** | Meeting-floor grace period, vent voice, ghost rules, Communications sabotage, and Meetings/Lobby Only mode. |
+| **Meeting & Voice** | Meeting-floor grace period, vent and impostor voice, ghost rules, Communications sabotage, Meetings/Lobby Only mode, and the meeting speaking overlay. |
 | **Team Radio** | Team Radio, the impostor channel, and task/meeting availability. |
 
 Compatible mods can register additional tabs under **Mod Behaviour**. Those tabs and role-specific options appear only when the source mod registers them; Perfect Comms does not include a permanent TOU-Mira settings tab.

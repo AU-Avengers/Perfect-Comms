@@ -203,7 +203,8 @@ internal static class VoiceFirstRunSetup
         _pageAppear = Mathf.MoveTowards(_pageAppear, 1f, dt / 0.20f);
         _hudReveal = Mathf.MoveTowards(
             _hudReveal,
-            !_completed && _page == HudPage && _draft?.HideSpeakingBar != true ? 1f : 0f,
+            !_completed && _page == HudPage &&
+            !VoiceRoomSettingsState.Current.DisableSpeakingBar ? 1f : 0f,
             dt / 0.28f);
 
         // Keep local audio cleanup and Android tone completion running even while the close
@@ -567,7 +568,7 @@ internal static class VoiceFirstRunSetup
 
         const float visibilityGap = 10f;
         const float visibilityCardH = 62f;
-        float visibilityW = (ContentWidth - visibilityGap * 3f) / 4f;
+        float visibilityW = (ContentWidth - visibilityGap) / 2f;
 
         var controlsVisibility = BuildCard(
             _pageRoot, "ControlsVisibility", 0f, ContentTopY,
@@ -579,30 +580,9 @@ internal static class VoiceFirstRunSetup
                 "Hides the microphone, deafen, and radio controls. Keyboard shortcuts still work.",
                 stacked: true));
 
-        var barVisibility = BuildCard(
-            _pageRoot, "SpeakingBarVisibility", visibilityW + visibilityGap, ContentTopY,
-            visibilityW, visibilityCardH);
-        AddRow(new VoiceUiKit.ToggleRow(
-                () => _draft.HideSpeakingBar,
-                value => _draft.HideSpeakingBar = value)
-            .Build(barVisibility, "Hide speaking bar", visibilityW, -4f, 54f,
-                "Hides the in-game speaking bar and its layout preview.",
-                stacked: true));
-
-        var meetingVisibility = BuildCard(
-            _pageRoot, "MeetingOverlayVisibility",
-            (visibilityW + visibilityGap) * 2f, ContentTopY,
-            visibilityW, visibilityCardH);
-        AddRow(new VoiceUiKit.ToggleRow(
-                () => _draft.HideMeetingOverlay,
-                value => _draft.HideMeetingOverlay = value)
-            .Build(meetingVisibility, "Hide meeting overlay", visibilityW, -4f, 54f,
-                "Hides the colored speaking glow around meeting cards.",
-                stacked: true));
-
         var connectionVisibility = BuildCard(
             _pageRoot, "ConnectionStatusVisibility",
-            (visibilityW + visibilityGap) * 3f, ContentTopY,
+            visibilityW + visibilityGap, ContentTopY,
             visibilityW, visibilityCardH);
         AddRow(new VoiceUiKit.ToggleRow(
                 () => _draft.HideConnectionStatus,
@@ -611,8 +591,9 @@ internal static class VoiceFirstRunSetup
                 "Hides lobby connection progress and active retry messages.",
                 stacked: true));
 
-        _builtHudSpeakingBarHidden = _draft.HideSpeakingBar;
-        if (_draft.HideSpeakingBar)
+        bool speakingBarHidden = VoiceRoomSettingsState.Current.DisableSpeakingBar;
+        _builtHudSpeakingBarHidden = speakingBarHidden;
+        if (speakingBarHidden)
         {
             BuildInlineNotice(
                 _pageRoot,
@@ -716,7 +697,9 @@ internal static class VoiceFirstRunSetup
             $"Start muted: {YesNo(_draft.StartMuted)} / Start deafened: {YesNo(_draft.StartDeafened)}",
         }, () => GoTo(ControlsPage));
 
-        string hudName = _draft.HideSpeakingBar
+        bool speakingBarHidden = VoiceRoomSettingsState.Current.DisableSpeakingBar;
+        bool meetingOverlayEnabled = VoiceRoomSettingsState.Current.MeetingSpeakingOverlay;
+        string hudName = speakingBarHidden
             ? "Speaking bar hidden"
             : _draft.SelectedHudPreset >= 0
                 ? FirstRunHudPresets.All[_draft.SelectedHudPreset].Name
@@ -725,11 +708,11 @@ internal static class VoiceFirstRunSetup
         {
             hudName,
             $"Controls {ShownHidden(_draft.HideVoiceControls)} / Connection status {ShownHidden(_draft.HideConnectionStatus)}",
-            _draft.HideSpeakingBar
-                ? $"Meeting glow {ShownHidden(_draft.HideMeetingOverlay)} / Speaking bar hidden"
-                : $"Meeting glow {ShownHidden(_draft.HideMeetingOverlay)} / {HudPlacementSummary(_draft.Hud)}",
-            _draft.HideSpeakingBar
-                ? "Layout can be restored from HUD settings"
+            speakingBarHidden
+                ? $"Meeting glow {(meetingOverlayEnabled ? "shown" : "hidden")} / Speaking bar hidden"
+                : $"Meeting glow {(meetingOverlayEnabled ? "shown" : "hidden")} / {HudPlacementSummary(_draft.Hud)}",
+            speakingBarHidden
+                ? "Visibility is controlled by the host"
                 : $"Scale {Mathf.RoundToInt(_draft.Hud.Scale * 100f)}% / Backdrop {(_draft.Hud.Backdrop ? "on" : "off")}",
         }, () => GoTo(HudPage));
 
@@ -1054,7 +1037,8 @@ internal static class VoiceFirstRunSetup
 
     private static void TickHudCards(float dt)
     {
-        if (_draft != null && _builtHudSpeakingBarHidden != _draft.HideSpeakingBar)
+        if (_draft != null &&
+            _builtHudSpeakingBarHidden != VoiceRoomSettingsState.Current.DisableSpeakingBar)
         {
             BuildPage();
             return;
@@ -1112,7 +1096,7 @@ internal static class VoiceFirstRunSetup
         float reveal = Smooth(_hudReveal);
         try
         {
-            if (_draft.HideSpeakingBar)
+            if (VoiceRoomSettingsState.Current.DisableSpeakingBar)
             {
                 _hudPreview.SetPresentation(0f, shouldRender: false);
                 return;
