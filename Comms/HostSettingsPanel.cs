@@ -263,7 +263,7 @@ public static class HostSettingsPanel
             2 => new List<OptionHolder>
             {
                 g.GracePeriodEnabled, g.GracePeriodSeconds,
-                g.HearInVent, g.VentPrivateChat, g.ImpostorHearGhosts, g.CommsSabDisables,
+                g.HearInVent, g.VentPrivateChat, g.ImpostorHearGhosts, g.ImpostorChat, g.CommsSabDisables,
                 g.OnlyGhostsCanTalk, g.GhostsHearEachOtherUnlimited, g.OnlyMeetingOrLobby,
                 g.OnlyMeetingOrLobbyAffectsGhosts
             },

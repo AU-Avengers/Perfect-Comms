@@ -8,6 +8,7 @@ internal enum VoiceProximityReason
     NoListener,
     OnlyMeetingOrLobby,
     OnlyGhostsCanTalk,
+    ImpostorChat,
     CommsSabotage,
     LocalDeadHearsGhost,
     LocalDeadHearsLiving,

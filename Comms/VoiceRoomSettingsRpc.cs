@@ -13,14 +13,14 @@ internal static class VoiceRoomSettingsRpc
     internal const byte LegacySnapshotKind = 1;
     private const byte RequestKind = 2;
     internal const byte SnapshotKind = 3;
-    internal const byte SnapshotSchema = 2;
+    internal const byte SnapshotSchema = 3;
     private const int MaxSyncedModOptions = 256;
 
     // Schema 1 is a self-contained, exact binary layout. The old kind-1 envelope had no
     // schema marker and was extended in-place repeatedly; its remaining-byte heuristics can
     // misread later fields at earlier offsets, so it must never enter the current decoder.
     private const int SnapshotHeaderBytes = 3; // schema:byte + bodyLength:ushort
-    private const int FixedSettingsBytes = 36;
+    private const int FixedSettingsBytes = 37;
     private const int ModOptionBytes = 9; // keyHash:int + isEnum:byte + value:int
     private const int MaxBackendServerUrlBytes = 512;
     internal const int MaxSnapshotPayloadBytes = SnapshotHeaderBytes + FixedSettingsBytes + 2
@@ -170,6 +170,7 @@ internal static class VoiceRoomSettingsRpc
         WriteBoolean(payload, ref offset, settings.WallsBlockSound);
         WriteBoolean(payload, ref offset, settings.OnlyHearInSight);
         WriteBoolean(payload, ref offset, settings.ImpostorHearGhosts);
+        WriteBoolean(payload, ref offset, settings.ImpostorChat);
         WriteBoolean(payload, ref offset, settings.HearInVent);
         WriteBoolean(payload, ref offset, settings.VentPrivateChat);
         WriteBoolean(payload, ref offset, settings.CommsSabDisables);
@@ -264,6 +265,7 @@ internal static class VoiceRoomSettingsRpc
         if (!TryReadBoolean(payload, ref offset, out bool wallsBlockSound)
             || !TryReadBoolean(payload, ref offset, out bool onlyHearInSight)
             || !TryReadBoolean(payload, ref offset, out bool impostorHearGhosts)
+            || !TryReadBoolean(payload, ref offset, out bool impostorChat)
             || !TryReadBoolean(payload, ref offset, out bool hearInVent)
             || !TryReadBoolean(payload, ref offset, out bool ventPrivateChat)
             || !TryReadBoolean(payload, ref offset, out bool commsSabDisables)
@@ -349,6 +351,7 @@ internal static class VoiceRoomSettingsRpc
             wallsBlockSound,
             onlyHearInSight,
             impostorHearGhosts,
+            impostorChat,
             hearInVent,
             ventPrivateChat,
             commsSabDisables,

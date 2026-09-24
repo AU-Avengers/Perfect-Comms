@@ -15,6 +15,7 @@ public class VoiceChatGameOptions
     public ToggleHolder WallsBlockSound { get; }
     public ToggleHolder OnlyHearInSight { get; }
     public ToggleHolder ImpostorHearGhosts { get; }
+    public ToggleHolder ImpostorChat { get; }
     public ToggleHolder HearInVent { get; }
     public ToggleHolder VentPrivateChat { get; }
     public ToggleHolder CommsSabDisables { get; }
@@ -50,6 +51,8 @@ public class VoiceChatGameOptions
             "Restricts normal task-phase voice to players inside the listener's current vision range.");
         ImpostorHearGhosts = new ToggleHolder(cfg, Section, "ImpostorHearGhosts", "Impostors Hear Dead", false,
             "Allows living impostors to hear dead players when the other ghost voice rules permit them to speak.");
+        ImpostorChat = new ToggleHolder(cfg, Section, "ImpostorChat", "Impostor Chat", false,
+            "Lets impostors hear one another anywhere and mutes crewmates outside meetings.");
         HearInVent = new ToggleHolder(cfg, Section, "HearInVent", "Hear Impostors in Vents", false,
             "Allows nearby players to hear an impostor who is currently inside a vent.");
         VentPrivateChat = new ToggleHolder(cfg, Section, "VentPrivateChat", "Private Talk in Vents", true,

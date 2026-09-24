@@ -260,6 +260,15 @@ internal static class VoiceProximityCalculator
         if (VoiceRoleMuteState.IsTaskVoiceBlocked(target))
             return VoiceProximityResult.Muted(VoiceRoleMuteState.GetTaskBlockReason(target), previousWallCoefficient);
 
+        if (s.ImpostorChat)
+        {
+            if (!localImp || !targetImp)
+                return VoiceProximityResult.Muted(VoiceProximityReason.ImpostorChat, previousWallCoefficient);
+
+            return new(1f, 0f, 0f, 0f, VoiceAudioFilterMode.None,
+                true, VoiceProximityReason.ImpostorChat, previousWallCoefficient);
+        }
+
         bool taskRadioAllowed = !s.TeamRadioInMeetings || s.TeamRadioInTasks;
         if (s.TeamRadio
             && taskRadioAllowed
